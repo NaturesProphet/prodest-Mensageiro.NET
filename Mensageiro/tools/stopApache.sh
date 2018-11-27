@@ -1,0 +1,1 @@
+docker stop activemq && docker rm activemq
