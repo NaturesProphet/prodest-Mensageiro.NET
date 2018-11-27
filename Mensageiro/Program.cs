@@ -75,7 +75,7 @@ namespace Mensageiro
                     var message = receivedMsg as ActiveMQMapMessage;
                     // if (((ActiveMQMapMessage)receivedMsg).GetObjectProperty("IDENTIFIER").ToString() == "303652")
                     // {
-                    String cartinha = $"{DateTime.Now.ToString("O")} {message.Body["IGNICAO"]}; {message.Body["LATITUDE"]}; {message.Body["LONGITUDE"]}; {message.Body["VELOCIDADE"]}";
+                    String cartinha = $"{DateTime.Now.ToString("O")} {message.Body["IGNICAO"]}; {message.Body["LATITUDE"]}; {message.Body["LONGITUDE"]}; {message.Body["CURSO"]}; {message.Body["ED1_ACIONADA"]}; {message.Body["ED2_ACIONADA"]}; {message.Body["ED3_ACIONADA"]}; {message.Body["ED4_ACIONADA"]}; {message.Body["ROTULO"]}; {message.Body["SD1_ACIONADA"]}; {message.Body["SD2_ACIONADA"]}; {message.Body["SD3_ACIONADA"]}; {message.Body["SD4_ACIONADA"]}; {message.Body["STATUS_GPS"]}; {message.Body["VELOCIDADE"]}";
                     Console.ForegroundColor = System.ConsoleColor.Blue;
 
                     Console.WriteLine("[  ACTIVEMQ   ]   " + cartinha);
