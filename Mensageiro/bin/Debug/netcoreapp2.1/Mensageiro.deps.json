@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "ab33b7bb32cd726e5df5969d797c3a43182d3b33"
+    "signature": "d1ab4fb2c511a3188992166af3bd3acd9d7b0862"
   },
   "compilationOptions": {},
   "targets": {
@@ -9,6 +9,7 @@
       "Mensageiro/1.0.0": {
         "dependencies": {
           "Apache.NMS.ActiveMQ": "1.7.2",
+          "Newtonsoft.Json": "12.0.1",
           "RabbitMQ.Client": "5.1.0"
         },
         "runtime": {
@@ -37,6 +38,14 @@
       "Microsoft.Win32.Primitives/4.3.0": {
         "dependencies": {
           "System.Runtime": "4.3.0"
+        }
+      },
+      "Newtonsoft.Json/12.0.1": {
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "12.0.0.0",
+            "fileVersion": "12.0.1.22727"
+          }
         }
       },
       "RabbitMQ.Client/5.1.0": {
@@ -699,6 +708,13 @@
       "sha512": "sha512-9ZQKCWxH7Ijp9BfahvL2Zyf1cJIk8XYLF6Yjzr2yi0b2cOut/HQ31qf1ThHAgCc3WiZMdnWcfJCgN82/0UunxA==",
       "path": "microsoft.win32.primitives/4.3.0",
       "hashPath": "microsoft.win32.primitives.4.3.0.nupkg.sha512"
+    },
+    "Newtonsoft.Json/12.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-jmVyoEyk0In8r+AObYQyFKVFm7uSRzE0XSHSbEtBJcZDMV6DqJoyB4FLcHwprPVhAh826so0db3DIKXVnpGoPA==",
+      "path": "newtonsoft.json/12.0.1",
+      "hashPath": "newtonsoft.json.12.0.1.nupkg.sha512"
     },
     "RabbitMQ.Client/5.1.0": {
       "type": "package",

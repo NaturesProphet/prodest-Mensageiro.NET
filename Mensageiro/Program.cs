@@ -1,9 +1,10 @@
 ﻿using Apache.NMS;
 using Apache.NMS.ActiveMQ;
 using Apache.NMS.ActiveMQ.Commands;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Threading;
-
 
 namespace Mensageiro
 {
@@ -14,12 +15,6 @@ namespace Mensageiro
 
         public static void Main(string[] args)
         {
-            // Example connection strings:W
-            //    activemq:tcp://activemqhost:61616
-            //    stomp:tcp://activemqhost:61613
-            //    ems:tcp://tibcohost:7222
-            //    msmq://localhost
-            // Uri connecturi = new Uri("activemq:tcp://dadosrast-gvbus.geocontrol.com.br:24987");
             Uri connecturi;
 
             if (args.Length > 0 && args[0] == "teste")
@@ -68,21 +63,26 @@ namespace Mensageiro
         protected static void OnMessage(IMessage receivedMsg)
         {
             Coelho coelho = new Coelho();
+            List<String> lista = new List<String>();
             try
             {
                 if (receivedMsg is ActiveMQMapMessage)
                 {
                     var message = receivedMsg as ActiveMQMapMessage;
-                    // if (((ActiveMQMapMessage)receivedMsg).GetObjectProperty("IDENTIFIER").ToString() == "303652")
-                    // {
-                    String cartinha = $"{DateTime.Now.ToString("O")} {message.Body["IGNICAO"]}; {message.Body["LATITUDE"]}; {message.Body["LONGITUDE"]}; {message.Body["CURSO"]}; {message.Body["ED1_ACIONADA"]}; {message.Body["ED2_ACIONADA"]}; {message.Body["ED3_ACIONADA"]}; {message.Body["ED4_ACIONADA"]}; {message.Body["ROTULO"]}; {message.Body["SD1_ACIONADA"]}; {message.Body["SD2_ACIONADA"]}; {message.Body["SD3_ACIONADA"]}; {message.Body["SD4_ACIONADA"]}; {message.Body["STATUS_GPS"]}; {message.Body["VELOCIDADE"]}";
-                    Console.ForegroundColor = System.ConsoleColor.Blue;
+                    var keys = message.Body.Keys;
 
-                    Console.WriteLine("[  ACTIVEMQ   ]   " + cartinha);
-                    Console.ResetColor();
+                    Mensagem mensagem2ActiveMQ = new Mensagem();
+
+                    foreach (var key in keys)
+                    {
+                        mensagem2ActiveMQ.add(key.ToString(), message.Body[key.ToString()]);
+                    }
+
+                    String mensagem2Rabbit = JsonConvert.SerializeObject(mensagem2ActiveMQ);
+
                     try
                     {
-                        coelho.send(cartinha);
+                        coelho.send(mensagem2Rabbit);
                     }
                     catch (Exception co)
                     {
@@ -92,7 +92,7 @@ namespace Mensageiro
                         Console.WriteLine("\n################################################\n");
                         Console.ResetColor();
                     }
-                    // }
+
                 }
             }
             catch (Exception e)

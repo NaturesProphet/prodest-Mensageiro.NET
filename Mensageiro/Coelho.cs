@@ -12,10 +12,6 @@ namespace Mensageiro
         protected ConnectionFactory factory;
         protected String RabbitHost = "localhost";
         protected String RabbitTopic = "CETURB";
-
-
-
-
         public void send(String args)
         {
             this.factory = new ConnectionFactory() { HostName = this.RabbitHost };
