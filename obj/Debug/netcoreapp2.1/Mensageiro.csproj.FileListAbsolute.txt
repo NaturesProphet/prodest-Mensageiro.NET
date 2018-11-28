@@ -9,3 +9,14 @@
 /home/mgarcia/GitProjects/Mensageiro.NET/Mensageiro/obj/Debug/netcoreapp2.1/Mensageiro.AssemblyInfo.cs
 /home/mgarcia/GitProjects/Mensageiro.NET/Mensageiro/obj/Debug/netcoreapp2.1/Mensageiro.dll
 /home/mgarcia/GitProjects/Mensageiro.NET/Mensageiro/obj/Debug/netcoreapp2.1/Mensageiro.pdb
+/home/mgarcia/GitProjects/Mensageiro.NET/bin/Debug/netcoreapp2.1/Mensageiro.deps.json
+/home/mgarcia/GitProjects/Mensageiro.NET/bin/Debug/netcoreapp2.1/Mensageiro.runtimeconfig.json
+/home/mgarcia/GitProjects/Mensageiro.NET/bin/Debug/netcoreapp2.1/Mensageiro.runtimeconfig.dev.json
+/home/mgarcia/GitProjects/Mensageiro.NET/bin/Debug/netcoreapp2.1/Mensageiro.dll
+/home/mgarcia/GitProjects/Mensageiro.NET/bin/Debug/netcoreapp2.1/Mensageiro.pdb
+/home/mgarcia/GitProjects/Mensageiro.NET/obj/Debug/netcoreapp2.1/Mensageiro.csprojAssemblyReference.cache
+/home/mgarcia/GitProjects/Mensageiro.NET/obj/Debug/netcoreapp2.1/Mensageiro.csproj.CoreCompileInputs.cache
+/home/mgarcia/GitProjects/Mensageiro.NET/obj/Debug/netcoreapp2.1/Mensageiro.AssemblyInfoInputs.cache
+/home/mgarcia/GitProjects/Mensageiro.NET/obj/Debug/netcoreapp2.1/Mensageiro.AssemblyInfo.cs
+/home/mgarcia/GitProjects/Mensageiro.NET/obj/Debug/netcoreapp2.1/Mensageiro.dll
+/home/mgarcia/GitProjects/Mensageiro.NET/obj/Debug/netcoreapp2.1/Mensageiro.pdb

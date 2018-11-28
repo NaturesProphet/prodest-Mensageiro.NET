@@ -10,8 +10,8 @@ namespace Mensageiro
     public class Coelho
     {
         protected ConnectionFactory factory;
-        protected String RabbitHost = "localhost";
-        protected String RabbitTopic = "CETURB";
+        protected String RabbitHost = "rabbit";
+        protected String RabbitTopic = "ceturb";
         public void send(String args)
         {
             this.factory = new ConnectionFactory() { HostName = this.RabbitHost };
@@ -21,7 +21,7 @@ namespace Mensageiro
                 channel.ExchangeDeclare(exchange: RabbitTopic, type: "topic", durable: true);
                 var message = args;//GetMessage(args);
                 var body = Encoding.UTF8.GetBytes(message);
-                channel.BasicPublish(exchange: RabbitTopic, routingKey: "#", basicProperties: null, body: body);
+                channel.BasicPublish(exchange: RabbitTopic, routingKey: "transcol", basicProperties: null, body: body);
                 Console.ForegroundColor = System.ConsoleColor.Green;
                 Console.WriteLine("[  RABBITMQ   ]   " + message + "\n");
                 Console.ResetColor();

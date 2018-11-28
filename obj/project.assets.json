@@ -4374,11 +4374,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/mgarcia/GitProjects/Mensageiro.NET/Mensageiro/Mensageiro.csproj",
+      "projectUniqueName": "/home/mgarcia/GitProjects/Mensageiro.NET/Mensageiro.csproj",
       "projectName": "Mensageiro",
-      "projectPath": "/home/mgarcia/GitProjects/Mensageiro.NET/Mensageiro/Mensageiro.csproj",
+      "projectPath": "/home/mgarcia/GitProjects/Mensageiro.NET/Mensageiro.csproj",
       "packagesPath": "/home/mgarcia/.nuget/packages/",
-      "outputPath": "/home/mgarcia/GitProjects/Mensageiro.NET/Mensageiro/obj/",
+      "outputPath": "/home/mgarcia/GitProjects/Mensageiro.NET/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/share/dotnet/sdk/NuGetFallbackFolder"
