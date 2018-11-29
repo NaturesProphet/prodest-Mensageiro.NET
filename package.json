@@ -1,6 +1,6 @@
 {
   "name": "mensageiro.net",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "sistema de envio de mensagens da fila da geocontrol para a fila da prodest",
   "main": "program.cs",
   "scripts": {
