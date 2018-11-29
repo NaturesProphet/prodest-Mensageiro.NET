@@ -10,6 +10,7 @@ namespace Mensageiro
         private string rabbitUrlConnection;
         private string rabbitTopic;
         private string rabbitRoutingKey;
+        private bool isProduction;
 
 
 
@@ -103,6 +104,13 @@ namespace Mensageiro
                 Console.ResetColor();
             }
             return this.rabbitRoutingKey;
+        }
+
+        public bool isProductionEnv()
+        {
+            String stringValue = this.rabbitRoutingKey = Environment.GetEnvironmentVariable("NODE_ENV");
+            this.isProduction = (stringValue.Equals("production"));
+            return this.isProduction;
         }
     }
 }
