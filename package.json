@@ -1,0 +1,41 @@
+{
+  "name": "mensageiro.net",
+  "version": "1.0.0",
+  "description": "sistema de envio de mensagens da fila da geocontrol para a fila da prodest",
+  "main": "program.cs",
+  "scripts": {
+    "commit": "git-cz",
+    "custom-tests": "echo \"(No other custom tests yet.)\" && echo",
+    "commitmsg": "validate-commit-msg",
+    "release": "standard-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.es.gov.br/espm/Mensageiro.NET.git"
+  },
+  "keywords": [
+    "dotnet",
+    "rabbitmq",
+    "apache",
+    "message",
+    "broker"
+  ],
+  "author": "prodest",
+  "license": "ISC",
+  "devDependencies": {
+    "commitizen": "^3.0.5",
+    "cz-conventional-changelog": "^2.1.0",
+    "husky": "^1.2.0",
+    "standard-version": "^4.4.0",
+    "validate-commit-msg": "^2.14.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    },
+    "validate-commit-msg": {
+      "types": "conventional-commit-types",
+      "helpMessage": "Use \"npm run commit\" instead, we use conventional-changelog format :) (https://github.com/commitizen/cz-cli)"
+    }
+  }
+}
