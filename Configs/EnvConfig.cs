@@ -1,7 +1,7 @@
 using System;
 namespace Mensageiro
 {
-    class EnvConfig
+    public class EnvConfig
     {
         private string apacheUrlConnection;
         private string rabbitUrlConnection;
@@ -10,7 +10,7 @@ namespace Mensageiro
 
         public String getApacheUrlConnection()
         {
-            String url = Environment.GetEnvironmentVariable(APACHE_URL_CONNECTION);
+            String url = Environment.GetEnvironmentVariable("APACHE_URL_CONNECTION");
             if (url is null)
             {
                 url = "activemq:tcp://localhost:61613";
@@ -23,7 +23,7 @@ namespace Mensageiro
 
         public String getRabbitUrlConnection()
         {
-            string url = Environment.GetEnvironmentVariable(RABBIT_URL_CONNECTION);
+            string url = Environment.GetEnvironmentVariable("RABBIT_URL_CONNECTION");
             if (url is null)
             {
                 url = "localhost";
@@ -36,7 +36,7 @@ namespace Mensageiro
 
         public String getRabbitTopic()
         {
-            string topic = Environment.GetEnvironmentVariable(RABBIT_TOPIC);
+            string topic = Environment.GetEnvironmentVariable("RABBIT_TOPIC");
             if (topic is null)
             {
                 topic = "CETURB";

@@ -10,17 +10,14 @@ namespace Mensageiro
 {
     class Program
     {
-        public Program()
-        {
-            this.config = new EnvConfig();
-        }
         protected static AutoResetEvent semaphore = new AutoResetEvent(false);
         protected static TimeSpan receiveTimeout = TimeSpan.FromSeconds(10);
-        EnvConfig config;
+
 
         public static void Main(string[] args)
         {
-            String connecturi = conf.getApacheUrlConnection();
+            EnvConfig config = new EnvConfig();
+            String connecturi = config.getApacheUrlConnection();
             //new Uri("failover:(tcp://dadosrast-gvbus.geocontrol.com.br:24987)");
 
 
