@@ -11,70 +11,53 @@ namespace Mensageiro
     class Program
     {
         protected static AutoResetEvent semaphore = new AutoResetEvent(false);
-        protected static TimeSpan receiveTimeout = TimeSpan.FromSeconds(10);
-
+        protected static EnvConfig config = new EnvConfig();
 
         public static void Main(string[] args)
         {
-            EnvConfig config = new EnvConfig();
-            String connecturi = config.getApacheUrlConnection();
-            //new Uri("failover:(tcp://dadosrast-gvbus.geocontrol.com.br:24987)");
+            Console.WriteLine("Iniciando nova conexão com " + config.getApacheUrlConnection());
+            IConnectionFactory factory = new ConnectionFactory(config.getApacheUrlConnection());
 
-
-            Console.WriteLine("About to connect to " + connecturi);
-
-            // NOTE: ensure the nmsprovider-activemq.config file exists in the executable folder.
-
-            IConnectionFactory factory = new ConnectionFactory(connecturi);
-
-            // using (IConnection connection = factory.CreateConnection("rast_prodest", "ZgFVt5kPhhV2"))
-            using (IConnection connection = factory.CreateConnection("rast_prodest", "ZgFVt5kPhhV2"))
+            //using (IConnection connection = factory.CreateConnection("rast_prodest", "ZgFVt5kPhhV2"))
+            using (IConnection connection = factory.CreateConnection(config.getApacheUser(), config.getApachePassword()))
             {
                 using (ISession session = connection.CreateSession(AcknowledgementMode.AutoAcknowledge))
                 {
-                    IDestination destination = session.GetTopic("DadosRastreioPRODEST");
-
-                    Console.WriteLine("Using destination: " + destination);
-
-                    // Create a consumer and producer
+                    //IDestination destination = session.GetTopic("DadosRastreioPRODEST");
+                    IDestination destination = session.GetTopic(config.getApacheTopic());
+                    Console.WriteLine("Ouvindo no topico: " + destination);
                     using (IMessageConsumer consumer = session.CreateConsumer(destination))
                     {
-                        // Start the connection so that messages will be processed.
                         connection.Start();
-                        // producer.Persistent = true;
                         consumer.Listener += new MessageListener(OnMessage);
-
-                        // Wait for the message
-
                         semaphore.WaitOne();
                     }
                 }
             }
         }
 
-        protected static void OnMessage(IMessage receivedMsg)
+        protected static void OnMessage(IMessage mensagemDoApache)
         {
-            Coelho coelho = new Coelho();
-            List<String> lista = new List<String>();
+            Carteiro carteiro = new Carteiro();
             try
             {
-                if (receivedMsg is ActiveMQMapMessage)
+                if (mensagemDoApache is ActiveMQMapMessage)
                 {
-                    var message = receivedMsg as ActiveMQMapMessage;
-                    var keys = message.Body.Keys;
+                    var mensagemRecebida = mensagemDoApache as ActiveMQMapMessage;
+                    var chaves = mensagemRecebida.Body.Keys;
 
-                    Mensagem mensagem2ActiveMQ = new Mensagem();
+                    Mensagem conteudoEnvio = new Mensagem();
 
-                    foreach (var key in keys)
+                    foreach (var chave in chaves)
                     {
-                        mensagem2ActiveMQ.add(key.ToString(), message.Body[key.ToString()]);
+                        conteudoEnvio.add(chave.ToString(), mensagemRecebida.Body[chave.ToString()]);
                     }
 
-                    String mensagem2Rabbit = JsonConvert.SerializeObject(mensagem2ActiveMQ);
+                    String mensagemAoRabbit = JsonConvert.SerializeObject(conteudoEnvio);
 
                     try
                     {
-                        coelho.send(mensagem2Rabbit);
+                        carteiro.send(mensagemAoRabbit);
                     }
                     catch (Exception co)
                     {
@@ -84,13 +67,16 @@ namespace Mensageiro
                         Console.WriteLine("\n################################################\n");
                         Console.ResetColor();
                     }
-
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Error: {e.Message}");
+                Console.ForegroundColor = System.ConsoleColor.Red;
+                Console.WriteLine("\n################################################\n");
+                Console.WriteLine($"Erro ao processar o envio de mensagens: {e.Message}");
                 Console.WriteLine(e.StackTrace);
+                Console.WriteLine("\n################################################\n");
+                Console.ResetColor();
             }
         }
     }

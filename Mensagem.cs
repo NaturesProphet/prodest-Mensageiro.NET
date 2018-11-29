@@ -10,10 +10,5 @@ namespace Mensageiro
         {
             data.Add(key, value);
         }
-
-
     }
-
-
-
 }
