@@ -3,18 +3,23 @@ using RabbitMQ.Client;
 using System.Text;
 
 
-
-
 namespace Mensageiro
 {
     public class Coelho
     {
+        public Coelho()
+        {
+            this.conf = new EnvConfig();
+            this.RabbitHost = conf.getRabbitUrlConnection();
+            this.RabbitTopic = conf.getRabbitTopic();
+            this.factory = new ConnectionFactory() { HostName = this.RabbitHost };
+        }
+        EnvConfig conf;
         protected ConnectionFactory factory;
-        protected String RabbitHost = "rabbit";
-        protected String RabbitTopic = "ceturb";
+        String RabbitHost;
+        String RabbitTopic;
         public void send(String args)
         {
-            this.factory = new ConnectionFactory() { HostName = this.RabbitHost };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {

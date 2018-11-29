@@ -10,24 +10,19 @@ namespace Mensageiro
 {
     class Program
     {
+        public Program()
+        {
+            this.config = new EnvConfig();
+        }
         protected static AutoResetEvent semaphore = new AutoResetEvent(false);
         protected static TimeSpan receiveTimeout = TimeSpan.FromSeconds(10);
+        EnvConfig config;
 
         public static void Main(string[] args)
         {
-            Uri connecturi;
+            String connecturi = conf.getApacheUrlConnection();
+            //new Uri("failover:(tcp://dadosrast-gvbus.geocontrol.com.br:24987)");
 
-            if (args.Length > 0 && args[0] == "teste")
-            {
-                Console.ForegroundColor = System.ConsoleColor.Blue;
-                Console.WriteLine("\nIniciando em modo de teste.\nAcessando o Apache de testes local...\n");
-                Console.ResetColor();
-                connecturi = new Uri("activemq:tcp://localhost:61613");
-            }
-            else
-            {
-                connecturi = new Uri("failover:(tcp://dadosrast-gvbus.geocontrol.com.br:24987)");
-            }
 
             Console.WriteLine("About to connect to " + connecturi);
 
