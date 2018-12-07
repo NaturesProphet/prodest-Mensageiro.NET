@@ -20,7 +20,7 @@ namespace Mensageiro
             this.apacheUrlConnection = Environment.GetEnvironmentVariable("APACHE_URL_CONNECTION");
             if (this.apacheUrlConnection is null)
             {
-                this.apacheUrlConnection = "activemq:tcp://localhost:61613";
+                this.apacheUrlConnection = "activemq:tcp://localhost:61616";
                 Console.ForegroundColor = System.ConsoleColor.Yellow;
                 Console.WriteLine("URL do apache não detectada no ambiente. usando url local.");
                 Console.ResetColor();
@@ -33,9 +33,9 @@ namespace Mensageiro
             this.apacheUser = Environment.GetEnvironmentVariable("APACHE_USER");
             if (this.apacheUser is null)
             {
-                this.apacheUser = "guest";
+                this.apacheUser = "myconsumer";
                 Console.ForegroundColor = System.ConsoleColor.Yellow;
-                Console.WriteLine("Usuario do apache não detectado no ambiente. usando o default 'guest'");
+                Console.WriteLine("Usuario do apache não detectado no ambiente. usando o default 'myconsumer'");
                 Console.ResetColor();
             }
             return this.apacheUser;
@@ -46,9 +46,9 @@ namespace Mensageiro
             this.apachePassword = Environment.GetEnvironmentVariable("APACHE_PASSWORD");
             if (this.apachePassword is null)
             {
-                this.apachePassword = "guest";
+                this.apachePassword = "consumerpassword";
                 Console.ForegroundColor = System.ConsoleColor.Yellow;
-                Console.WriteLine("Senha do apache não detectada no ambiente. usando o default 'guest'");
+                Console.WriteLine("Senha do apache não detectada no ambiente. usando o default 'consumerpassword'");
                 Console.ResetColor();
             }
             return this.apachePassword;
@@ -61,7 +61,7 @@ namespace Mensageiro
             {
                 this.apacheTopic = "TOPICO";
                 Console.ForegroundColor = System.ConsoleColor.Yellow;
-                Console.WriteLine("Topico do apache não detectado no ambiente. usando o default 'guest'");
+                Console.WriteLine("Topico do apache não detectado no ambiente. usando o default 'TOPICO'");
                 Console.ResetColor();
             }
             return this.apacheTopic;

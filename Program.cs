@@ -15,25 +15,18 @@ namespace Mensageiro
 
         public static void Main(string[] args)
         {
+            Console.Clear();
             Console.WriteLine("Iniciando nova conexão com " + config.getApacheUrlConnection());
             IConnectionFactory factory = new ConnectionFactory(config.getApacheUrlConnection());
-
-            //using (IConnection connection = factory.CreateConnection("rast_prodest", "ZgFVt5kPhhV2"))
-            using (IConnection connection = factory.CreateConnection(config.getApacheUser(), config.getApachePassword()))
-            {
-                using (ISession session = connection.CreateSession(AcknowledgementMode.AutoAcknowledge))
-                {
-                    //IDestination destination = session.GetTopic("DadosRastreioPRODEST");
-                    IDestination destination = session.GetTopic(config.getApacheTopic());
-                    Console.WriteLine("Ouvindo no topico: " + destination);
-                    using (IMessageConsumer consumer = session.CreateConsumer(destination))
-                    {
-                        connection.Start();
-                        consumer.Listener += new MessageListener(OnMessage);
-                        semaphore.WaitOne();
-                    }
-                }
-            }
+            IConnection connection = factory.CreateConnection(config.getApacheUser(), config.getApachePassword());
+            ISession session = connection.CreateSession(AcknowledgementMode.AutoAcknowledge);
+            Console.WriteLine("ACK MODE: " + connection.AcknowledgementMode);
+            IDestination destination = session.GetTopic(config.getApacheTopic());
+            Console.WriteLine("Ouvindo no topico: " + destination);
+            IMessageConsumer consumer = session.CreateConsumer(destination);
+            connection.Start();
+            consumer.Listener += new MessageListener(OnMessage);
+            semaphore.WaitOne();
         }
 
         protected static void OnMessage(IMessage mensagemDoApache)
@@ -45,16 +38,12 @@ namespace Mensageiro
                 {
                     var mensagemRecebida = mensagemDoApache as ActiveMQMapMessage;
                     var chaves = mensagemRecebida.Body.Keys;
-
                     Mensagem conteudoEnvio = new Mensagem();
-
                     foreach (var chave in chaves)
                     {
                         conteudoEnvio.add(chave.ToString(), mensagemRecebida.Body[chave.ToString()]);
                     }
-
                     String mensagemAoRabbit = JsonConvert.SerializeObject(conteudoEnvio);
-
                     try
                     {
                         carteiro.send(mensagemAoRabbit);
