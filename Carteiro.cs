@@ -29,13 +29,9 @@ namespace Mensageiro
                 var message = dadosEnvio;
                 var body = Encoding.UTF8.GetBytes(message);
                 channel.BasicPublish(exchange: RabbitTopic, routingKey: conf.getRabbitRoutingKey(), basicProperties: null, body: body);
-                //printa muito verbosamente na tela apenas em ambientes de desenvolvimento
-                if (!conf.isProductionEnv())
-                {
-                    Console.ForegroundColor = System.ConsoleColor.Green;
-                    Console.WriteLine("[  RABBITMQ   ]   " + message + "\n");
-                    Console.ResetColor();
-                }
+                Console.ForegroundColor = System.ConsoleColor.Green;
+                Console.WriteLine("[  RABBITMQ   ]   " + message + "\n");
+                Console.ResetColor();
             }
         }
     }

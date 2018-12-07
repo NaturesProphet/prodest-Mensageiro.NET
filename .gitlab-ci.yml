@@ -1,6 +1,5 @@
 stages:
   - build
-  - deploy
 
 
 cache:
@@ -22,14 +21,3 @@ build_job:
     - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
     - docker tag $CI_REGISTRY_IMAGE:$CI_BUILD_TAG $CI_REGISTRY_IMAGE:latest
     - docker push $CI_REGISTRY_IMAGE:latest
-
-deploy_job:
-  stage: deploy
-  image: registry.es.gov.br/espm/dockers/node:8.12.0-alpine
-  only:
-    - tags
-  script:
-    - npm i upgrade-rancher
-    - ./node_modules/.bin/upgrade-rancher --IMAGE $CI_REGISTRY_IMAGE:$CI_BUILD_TAG --SERVICE_ID 1s768
-  dependencies:
-    - build_job
