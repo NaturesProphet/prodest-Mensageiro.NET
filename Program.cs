@@ -32,23 +32,23 @@ namespace Mensageiro
 
         protected static void OnMessage(IMessage mensagemDoApache)
         {
-            contagemMsgs++;
-            if (contagemMsgs == 1)
-            {
-                Console.ForegroundColor = System.ConsoleColor.Green;
-                Console.WriteLine("\n################################################\n");
-                Console.WriteLine("Recebendo dados...");
-                Console.WriteLine("################################################\n");
-                Console.ResetColor();
-            }
-            if (contagemMsgs % config.getContagemParaAnunciar() == 0)
-            {
-                Console.ForegroundColor = System.ConsoleColor.Green;
-                Console.WriteLine("\n################################################");
-                Console.WriteLine(contagemMsgs + " mensagems recebidas...");
-                Console.WriteLine("################################################\n");
-                Console.ResetColor();
-            }
+            // contagemMsgs++;
+            // if (contagemMsgs == 1)
+            // {
+            //     Console.ForegroundColor = System.ConsoleColor.Green;
+            //     Console.WriteLine("\n################################################\n");
+            //     Console.WriteLine("Recebendo dados...");
+            //     Console.WriteLine("################################################\n");
+            //     Console.ResetColor();
+            // }
+            // if (contagemMsgs % config.getContagemParaAnunciar() == 0)
+            // {
+            //     Console.ForegroundColor = System.ConsoleColor.Green;
+            //     Console.WriteLine("\n################################################");
+            //     Console.WriteLine(contagemMsgs + " mensagems recebidas...");
+            //     Console.WriteLine("################################################\n");
+            //     Console.ResetColor();
+            // }
             Carteiro carteiro = new Carteiro();
             try
             {

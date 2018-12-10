@@ -29,12 +29,12 @@ namespace Mensageiro
                 var message = dadosEnvio;
                 var body = Encoding.UTF8.GetBytes(message);
                 channel.BasicPublish(exchange: RabbitTopic, routingKey: conf.getRabbitRoutingKey(), basicProperties: null, body: body);
-                if (!conf.isProductionEnv())
-                {
-                    Console.ForegroundColor = System.ConsoleColor.Green;
-                    Console.WriteLine("[  RABBITMQ   ]   " + message + "\n");
-                    Console.ResetColor();
-                }
+                // if (!conf.isProductionEnv())
+                // {
+                //     Console.ForegroundColor = System.ConsoleColor.Green;
+                //     Console.WriteLine("[  RABBITMQ   ]   " + message + "\n");
+                //     Console.ResetColor();
+                // }
             }
         }
     }
