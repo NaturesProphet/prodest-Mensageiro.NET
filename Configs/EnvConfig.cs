@@ -10,6 +10,7 @@ namespace Mensageiro
         private string rabbitUrlConnection;
         private string rabbitTopic;
         private string rabbitRoutingKey;
+        private string rabbitRoutingKeyMongo;
         private int contagemAnuncio;
 
 
@@ -104,6 +105,19 @@ namespace Mensageiro
                 Console.ResetColor();
             }
             return this.rabbitRoutingKey;
+        }
+
+        public String getRabbitRoutingKeyMongo()
+        {
+            this.rabbitRoutingKeyMongo = Environment.GetEnvironmentVariable("RABBIT_ROUTING_KEY_MONGO");
+            if (this.rabbitRoutingKeyMongo is null)
+            {
+                this.rabbitRoutingKeyMongo = "mongo";
+                Console.ForegroundColor = System.ConsoleColor.Yellow;
+                Console.WriteLine("Chave de rota do RabbitMQ/mongo não detectada no ambiente. usando o default 'mongo'");
+                Console.ResetColor();
+            }
+            return this.rabbitRoutingKeyMongo;
         }
 
         public bool isProductionEnv()
