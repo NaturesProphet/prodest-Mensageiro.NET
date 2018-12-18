@@ -61,6 +61,7 @@ namespace Mensageiro
                     {
                         conteudoEnvio.add(chave.ToString(), mensagemRecebida.Body[chave.ToString()]);
                     }
+                    conteudoEnvio.format();
                     String mensagemAoRabbit = JsonConvert.SerializeObject(conteudoEnvio);
                     try
                     {
