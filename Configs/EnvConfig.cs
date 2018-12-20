@@ -96,12 +96,12 @@ namespace Mensageiro
 
         public String getRabbitRoutingKey()
         {
-            this.rabbitRoutingKey = Environment.GetEnvironmentVariable("RABBIT_ROUTING_KEY");
+            this.rabbitRoutingKey = Environment.GetEnvironmentVariable("RABBIT_ROUTING_KEY_SQL");
             if (this.rabbitRoutingKey is null)
             {
-                this.rabbitRoutingKey = "CETURB";
+                this.rabbitRoutingKey = "realtime.sql";
                 Console.ForegroundColor = System.ConsoleColor.Yellow;
-                Console.WriteLine("Chave de rota do RabbitMQ não detectada no ambiente. usando o default 'CETURB'");
+                Console.WriteLine("Chave de rota do RabbitMQ não detectada no ambiente. usando o default 'realtime.sql'");
                 Console.ResetColor();
             }
             return this.rabbitRoutingKey;
@@ -112,9 +112,9 @@ namespace Mensageiro
             this.rabbitRoutingKeyMongo = Environment.GetEnvironmentVariable("RABBIT_ROUTING_KEY_MONGO");
             if (this.rabbitRoutingKeyMongo is null)
             {
-                this.rabbitRoutingKeyMongo = "mongo";
+                this.rabbitRoutingKeyMongo = "realtime.mongo";
                 Console.ForegroundColor = System.ConsoleColor.Yellow;
-                Console.WriteLine("Chave de rota do RabbitMQ/mongo não detectada no ambiente. usando o default 'mongo'");
+                Console.WriteLine("Chave de rota do RabbitMQ/mongo não detectada no ambiente. usando o default 'realtime.mongo'");
                 Console.ResetColor();
             }
             return this.rabbitRoutingKeyMongo;
