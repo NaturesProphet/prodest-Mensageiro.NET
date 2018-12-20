@@ -11,7 +11,6 @@ namespace Mensageiro
         private string rabbitTopic;
         private string rabbitRoutingKey;
         private string rabbitRoutingKeyMongo;
-        private int contagemAnuncio;
 
 
 
@@ -126,27 +125,6 @@ namespace Mensageiro
             if (env is null) return false;
             if (env.Equals("production")) return true;
             return false;
-        }
-
-        public int getContagemParaAnunciar()
-        {
-            string env = Environment.GetEnvironmentVariable("CONTAGEM_ANUNCIO");
-            if (env is null)
-            {
-                this.contagemAnuncio = 1000;
-                Console.ForegroundColor = System.ConsoleColor.Yellow;
-                Console.WriteLine("Contagem para anunciar não detectada no ambiente. usando o default 'CETURB'");
-                Console.ResetColor();
-            }
-            try
-            {
-                this.contagemAnuncio = int.Parse(env);
-            }
-            catch (Exception e)
-            {
-                this.contagemAnuncio = 1000;
-            }
-            return this.contagemAnuncio;
         }
     }
 }

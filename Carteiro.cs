@@ -9,33 +9,36 @@ namespace Mensageiro
         public Carteiro()
 
         {
-            this.conf = new EnvConfig();
-            this.RabbitHost = conf.getRabbitUrlConnection();
-            this.RabbitTopic = conf.getRabbitTopic();
+            EnvConfig env = new EnvConfig();
+            this.RabbitHost = env.getRabbitUrlConnection();
+            this.RabbitTopic = env.getRabbitTopic();
             this.factory = new ConnectionFactory() { HostName = this.RabbitHost };
+            this.KeyMongo = env.getRabbitRoutingKeyMongo();
+            this.KeySQL = env.getRabbitRoutingKey();
         }
-        private EnvConfig conf;
+
         private ConnectionFactory factory;
         private String RabbitHost;
         private String RabbitTopic;
+        private String KeySQL;
+        private String KeyMongo;
 
-
+        /**
+        @param String em formato json com os dados de uma mensagem real-time de um ônibus qualquer.
+        Este método envia duas mensagens ao tópico da ceturb dentro do nosso RabbitMQ,
+        uma delas vai para a fila do popMQ (SQL-Server) e a outra para a fila do popMongo (MongoDB)
+        */
         public void send(String dadosEnvio)
         {
             using (IConnection connection = factory.CreateConnection())
             using (IModel channel = connection.CreateModel())
             {
                 channel.ExchangeDeclare(exchange: RabbitTopic, type: "topic", durable: true);
-                var message = dadosEnvio;
-                var body = Encoding.UTF8.GetBytes(message);
-                channel.BasicPublish(exchange: RabbitTopic, routingKey: conf.getRabbitRoutingKey(), basicProperties: null, body: body);
-                channel.BasicPublish(exchange: RabbitTopic, routingKey: conf.getRabbitRoutingKeyMongo(), basicProperties: null, body: body);
-                // if (!conf.isProductionEnv())
-                // {
-                //     Console.ForegroundColor = System.ConsoleColor.Green;
-                //     Console.WriteLine("[  RABBITMQ   ]   " + message + "\n");
-                //     Console.ResetColor();
-                // }
+                var body = Encoding.UTF8.GetBytes(dadosEnvio);
+                //envia uma cópia para a fila do SQL-Server
+                channel.BasicPublish(exchange: RabbitTopic, routingKey: this.KeySQL, basicProperties: null, body: body);
+                //envia outra cópia para a fila do MongoDB
+                channel.BasicPublish(exchange: RabbitTopic, routingKey: this.KeyMongo, basicProperties: null, body: body);
             }
         }
     }

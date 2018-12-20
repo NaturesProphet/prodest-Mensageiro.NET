@@ -23,9 +23,9 @@ namespace Mensageiro
                 LOCALIZACAO.Add("type", "Point");
                 LOCALIZACAO.Add("coordinates", coordinates);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Console.WriteLine("LAT/LONG não encontrados na mensagem");
+                X9.OQueRolouNaParada(e, 3);
             }
         }
     }

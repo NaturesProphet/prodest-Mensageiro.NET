@@ -12,18 +12,27 @@ namespace Mensageiro
     {
         protected static AutoResetEvent semaphore = new AutoResetEvent(false);
         protected static EnvConfig config = new EnvConfig();
-        protected static int contagemMsgs = 0;
+        protected static String apacheUrlConnection;
+        protected static String apacheUser;
+        protected static String apachePassword;
+        protected static String apacheTopic;
+
 
         public static void Main(string[] args)
         {
+            apacheUrlConnection = config.getApacheUrlConnection();
+            apacheUser = config.getApacheUser();
+            apachePassword = config.getApachePassword();
+            apacheTopic = config.getApacheTopic();
+
             Console.Clear();
-            Console.WriteLine("Iniciando nova conexão com " + config.getApacheUrlConnection());
-            IConnectionFactory factory = new ConnectionFactory(config.getApacheUrlConnection());
-            IConnection connection = factory.CreateConnection(config.getApacheUser(), config.getApachePassword());
+            Console.WriteLine("Iniciando nova conexão com " + apacheUrlConnection);
+            IConnectionFactory factory = new ConnectionFactory(apacheUrlConnection);
+            IConnection connection = factory.CreateConnection(apacheUser, apachePassword);
             ISession session = connection.CreateSession(AcknowledgementMode.AutoAcknowledge);
             Console.WriteLine("ACK MODE: " + connection.AcknowledgementMode);
-            IDestination destination = session.GetTopic(config.getApacheTopic());
-            Console.WriteLine("Ouvindo no topico: " + destination);
+            IDestination destination = session.GetTopic(apacheTopic);
+            Console.WriteLine("Ouvindo o Apache no topico: " + destination);
             IMessageConsumer consumer = session.CreateConsumer(destination);
             connection.Start();
             consumer.Listener += new MessageListener(OnMessage);
@@ -32,23 +41,6 @@ namespace Mensageiro
 
         protected static void OnMessage(IMessage mensagemDoApache)
         {
-            // contagemMsgs++;
-            // if (contagemMsgs == 1)
-            // {
-            //     Console.ForegroundColor = System.ConsoleColor.Green;
-            //     Console.WriteLine("\n################################################\n");
-            //     Console.WriteLine("Recebendo dados...");
-            //     Console.WriteLine("################################################\n");
-            //     Console.ResetColor();
-            // }
-            // if (contagemMsgs % config.getContagemParaAnunciar() == 0)
-            // {
-            //     Console.ForegroundColor = System.ConsoleColor.Green;
-            //     Console.WriteLine("\n################################################");
-            //     Console.WriteLine(contagemMsgs + " mensagems recebidas...");
-            //     Console.WriteLine("################################################\n");
-            //     Console.ResetColor();
-            // }
             Carteiro carteiro = new Carteiro();
             try
             {
@@ -69,22 +61,13 @@ namespace Mensageiro
                     }
                     catch (Exception co)
                     {
-                        Console.ForegroundColor = System.ConsoleColor.Red;
-                        Console.WriteLine("\n################################################\n");
-                        Console.WriteLine("ERRO AO ENVIAR PRO RABBIT\n" + co.Message);
-                        Console.WriteLine("\n################################################\n");
-                        Console.ResetColor();
+                        X9.OQueRolouNaParada(co, 1);
                     }
                 }
             }
             catch (Exception e)
             {
-                Console.ForegroundColor = System.ConsoleColor.Red;
-                Console.WriteLine("\n################################################\n");
-                Console.WriteLine($"Erro ao processar o envio de mensagens: {e.Message}");
-                Console.WriteLine(e.StackTrace);
-                Console.WriteLine("\n################################################\n");
-                Console.ResetColor();
+                X9.OQueRolouNaParada(e, 2);
             }
         }
     }
