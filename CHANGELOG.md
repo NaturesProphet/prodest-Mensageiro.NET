@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.0"></a>
+# [1.2.0](https://gitlab.es.gov.br/espm/Mensageiro.NET/compare/v1.1.5...v1.2.0) (2018-12-20)
+
+
+### Features
+
+* **Rabbit:** mensagens replicadas em outra fila para o mongo ([f564312](https://gitlab.es.gov.br/espm/Mensageiro.NET/commit/f564312))
+
+
+
 <a name="1.1.5"></a>
 ## [1.1.5](https://gitlab.es.gov.br/espm/Mensageiro.NET/compare/v1.1.4...v1.1.5) (2018-12-10)
 
