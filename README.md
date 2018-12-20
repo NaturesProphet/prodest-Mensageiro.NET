@@ -27,8 +27,8 @@ Default: localhost
 RABBIT_TOPIC                                # Topico onde as mensagens são enviadas ao rabbit
 Default: CETURB
 
-RABBIT_ROUTING_KEY                          # Chave de roteamento do historico no rabbit
-Default: CETURB
+RABBIT_ROUTING_KEY_SQL                      # Chave de roteamento do historico no rabbit
+Default: realtime.sql
 
 RABBIT_ROUTING_KEY_MONGO                    # Chave de roteamento do real-time no rabbit
 Default: mongo
