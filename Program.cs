@@ -16,6 +16,7 @@ namespace Mensageiro
         protected static String apacheUser;
         protected static String apachePassword;
         protected static String apacheTopic;
+        protected static bool isProductionEnv;
 
 
         public static void Main(string[] args)
@@ -24,6 +25,7 @@ namespace Mensageiro
             apacheUser = config.getApacheUser();
             apachePassword = config.getApachePassword();
             apacheTopic = config.getApacheTopic();
+            isProductionEnv = config.isProductionEnv();
 
             Console.Clear();
             Console.WriteLine("Iniciando nova conexão com " + apacheUrlConnection);
@@ -58,6 +60,8 @@ namespace Mensageiro
                     try
                     {
                         carteiro.send(mensagemAoRabbit);
+                        if (!isProductionEnv)
+                            X9.showInfo(1, mensagemAoRabbit, null, null);
                     }
                     catch (Exception co)
                     {

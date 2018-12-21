@@ -15,6 +15,16 @@ namespace Mensageiro
             this.factory = new ConnectionFactory() { HostName = this.RabbitHost };
             this.KeyMongo = env.getRabbitRoutingKeyMongo();
             this.KeySQL = env.getRabbitRoutingKey();
+            try
+            {
+                this.connection = factory.CreateConnection();
+                this.channel = connection.CreateModel();
+                channel.ExchangeDeclare(exchange: RabbitTopic, type: "topic", durable: true);
+            }
+            catch (Exception e)
+            {
+                X9.OQueRolouNaParada(e, 4);
+            }
         }
 
         private ConnectionFactory factory;
@@ -22,6 +32,8 @@ namespace Mensageiro
         private String RabbitTopic;
         private String KeySQL;
         private String KeyMongo;
+        private IConnection connection;
+        private IModel channel;
 
         /**
         @param String em formato json com os dados de uma mensagem real-time de um ônibus qualquer.
@@ -30,15 +42,20 @@ namespace Mensageiro
         */
         public void send(String dadosEnvio)
         {
-            using (IConnection connection = factory.CreateConnection())
-            using (IModel channel = connection.CreateModel())
             {
-                channel.ExchangeDeclare(exchange: RabbitTopic, type: "topic", durable: true);
-                var body = Encoding.UTF8.GetBytes(dadosEnvio);
-                //envia uma cópia para a fila do SQL-Server
-                channel.BasicPublish(exchange: RabbitTopic, routingKey: this.KeySQL, basicProperties: null, body: body);
-                //envia outra cópia para a fila do MongoDB
-                channel.BasicPublish(exchange: RabbitTopic, routingKey: this.KeyMongo, basicProperties: null, body: body);
+                try
+                {
+                    var conteudoMensagem = Encoding.UTF8.GetBytes(dadosEnvio);
+                    //envia uma cópia para a fila do SQL-Server
+                    this.channel.BasicPublish(exchange: RabbitTopic, routingKey: this.KeySQL, basicProperties: null, body: conteudoMensagem);
+                    //envia outra cópia para a fila do MongoDB
+                    this.channel.BasicPublish(exchange: RabbitTopic, routingKey: this.KeyMongo, basicProperties: null, body: conteudoMensagem);
+
+                }
+                catch (Exception e)
+                {
+                    X9.OQueRolouNaParada(e, 5);
+                }
             }
         }
     }

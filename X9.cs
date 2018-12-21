@@ -39,6 +39,24 @@ namespace Mensageiro
                     Console.ResetColor();
                     break;
 
+                case 4:
+                    Console.ForegroundColor = System.ConsoleColor.Red;
+                    Console.WriteLine("\n################################################\n");
+                    Console.WriteLine("Falhou ao tentar se conectar ao RabbitMQ");
+                    Console.WriteLine(e.Message);
+                    Console.WriteLine("\n################################################\n");
+                    Console.ResetColor();
+                    break;
+
+                case 5:
+                    Console.ForegroundColor = System.ConsoleColor.Red;
+                    Console.WriteLine("\n################################################\n");
+                    Console.WriteLine("Falhou ao tentar Enviar mensagens ao RabbitMQ");
+                    Console.WriteLine(e.Message);
+                    Console.WriteLine("\n################################################\n");
+                    Console.ResetColor();
+                    break;
+
                 default:
                     Console.ForegroundColor = System.ConsoleColor.Red;
                     Console.WriteLine("\n################################################\n");
@@ -47,6 +65,21 @@ namespace Mensageiro
                     Console.ResetColor();
                     break;
             }
+        }
+
+        public static void showInfo(int NumeroMagico, String msg1, String msg2, String msg3)
+        {
+            switch (NumeroMagico)
+            {
+                case 1:
+                    Console.ForegroundColor = System.ConsoleColor.Green;
+                    Console.WriteLine("\n################################################\n");
+                    Console.WriteLine("Mensagem processada:" + msg1);
+                    Console.WriteLine("\n################################################\n");
+                    Console.ResetColor();
+                    break;
+            }
+
         }
     }
 }
